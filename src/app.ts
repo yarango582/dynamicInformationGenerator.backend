@@ -2,8 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import server from './server/server';
 import morgan from 'morgan';
-import "reflect-metadata"; //dependencia del orm
 import ConnectionManagerDb from './db/connectionManager.db';
+import "reflect-metadata"; //dependencia del orm
 
 const app: express.Application = express();
 dotenv.config();
