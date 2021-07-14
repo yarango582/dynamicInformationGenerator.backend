@@ -2,7 +2,7 @@
   "name": "dynamicinformationgenerator",
   "version": "1.0.0",
   "description": "send informacion at server's ftp",
-  "main": "dist/app.js",
+  "main": "dist/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.ts",
