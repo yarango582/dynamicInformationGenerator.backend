@@ -18,6 +18,10 @@ module.exports = [
         entitiesDir: process.env.TYPE_ORM_ENTITIES_DIR,
         migrationsDir: process.env.TYPE_ORM_MIGRATIONS_DIR,
         subscribersDir: process.env.TYPE_ORM_SUBSCRIBERS_DIR
-      }
+      },
+      ssl:
+        process.env.NODE_ENV === 'production'
+        ? { rejectUnauthorized: false }
+        : false,
     },
 ]
