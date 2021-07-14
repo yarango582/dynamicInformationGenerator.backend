@@ -9,5 +9,8 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true
     },
+    "include": [
+        "src/**/*"
+    ],
     "lib": ["es2015"]
 }
