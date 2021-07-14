@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { UserRole } from '../enums/UserRoles.enums';
-import { DbClient } from './DbClient';
+import { DbClient } from './DbClient.model';
 
 @Entity()
 export class Client {
@@ -26,9 +26,9 @@ export class Client {
         default: [UserRole.USER],
         nullable: false
     })
-    rol: UserRole[];
+    rol: UserRole;
 
-    @OneToMany(() => DbClient, dbClient => dbClient.id)
-    fk_dbClient: number;
+    @OneToMany(() => DbClient, dbClient => dbClient.clientId)
+    fk_dbClient: DbClient;
 }
  
