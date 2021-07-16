@@ -1,0 +1,7 @@
+{
+    "incompleteInformation": "Hacen falta datos obligatorios para completar la solicitud",
+    "documentExistent": "El documento ingresado ya existe en el sistema",
+    "successfulRequest": "La peticion se ejecuto correctamente",
+    "retryAgain": "Hubo un error al ejecutar la consulta, verifica tu conexion y vuelve a ejecutar en unos minutos, de persistir el error, comunicate con soporte",
+    "notFound": "No se encuentra la informacion que esta buscando"
+}
