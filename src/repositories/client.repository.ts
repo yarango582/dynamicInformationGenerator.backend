@@ -1,8 +1,6 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { Client } from '../models/Client.model';
 import { UserRole } from '../enums/UserRoles.enums';
-import customMessages = require('../locales/responseMessages.locales.json');
-
 @EntityRepository(Client)
 export class ClientRepository extends Repository<Client>{
 
@@ -12,8 +10,8 @@ export class ClientRepository extends Repository<Client>{
         if (result.length > 0) {
             return false;
         } else {
-           await this.insert({ nombre, documento, correo, telefono, rol });
-           return true;
+            await this.insert({ nombre, documento, correo, telefono, rol });
+            return true;
         }
     }
 
