@@ -1,4 +1,4 @@
-import customMessages from '../locales/apiSystem.locales.json';
+import customMessages from '../../locales/apiSystem.locales.json';
 export default class RouterManager {
 
     static async init(instance: any, routes: any[]) {

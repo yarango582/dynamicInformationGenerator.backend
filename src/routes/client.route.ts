@@ -1,7 +1,7 @@
 import express from 'express';
 import ClientController from '../controllers/client.controller';
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 router.post('/api/v1/client', async (req, res) => {
     const { nombre, documento, correo, telefono, rol } = req.body;

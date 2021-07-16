@@ -1,8 +1,8 @@
 import express from 'express';
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
-router.get('/api/v1/testConnection', async (req, res) => {
+router.get('/api/v1/testconnection', async (req, res) => {
 
     res.status(200).json({
         response: "server up",

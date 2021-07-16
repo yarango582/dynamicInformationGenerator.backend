@@ -1,0 +1,61 @@
+import { getCustomRepository } from 'typeorm';
+import { typesDB } from '../enums/typesDb.enums';
+import { DbClientRepository } from '../repositories/dbClient.repository';
+import Responses from '../interfaces/responses.interfaces';
+import customMessages from '../locales/responseMessages.locales.json';
+import { StatusCode } from '../enums/StatusCode.enums';
+export default class DbClientController {
+
+    private readonly dbClientRepository: DbClientRepository;
+
+    constructor() {
+        this.dbClientRepository = getCustomRepository(DbClientRepository);
+    }
+
+    async add(nombre: string, tipoDb: typesDB, host: string, contrasena: string, usuario_remoto: string, clientId: number) {
+        const result = await this.dbClientRepository.add(nombre, tipoDb, host, contrasena, usuario_remoto, clientId);
+        if (result) {
+            return {
+                message: customMessages.successfulRequest,
+                statusCode: StatusCode.CREATED
+            } as Responses;
+        } else {
+            return {
+                message: customMessages.incompleteInformation,
+                statusCode: StatusCode.BAD_REQUEST
+            } as Responses;
+        }
+    }
+
+    async list() {
+        const result = await this.dbClientRepository.listAll();
+        if (result) {
+            return {
+                message: customMessages.successfulRequest,
+                statusCode: StatusCode.OK,
+                data: result
+            } as Responses;
+        } else {
+            return {
+                message: customMessages.notFound,
+                statusCode: StatusCode.NOT_FOUND
+            } as Responses;
+        }
+    }
+
+    async listByIdClient(idClient: number) {
+        const result = await this.dbClientRepository.listOne(idClient);
+        if (result) {
+            return {
+                message: customMessages.successfulRequest,
+                statusCode: StatusCode.OK,
+                data: result
+            } as Responses;
+        } else {
+            return {
+                message: customMessages.notFound,
+                statusCode: StatusCode.NOT_FOUND
+            } as Responses;
+        }
+    }
+}

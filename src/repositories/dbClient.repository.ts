@@ -14,7 +14,7 @@ export class DbClientRepository extends Repository<DbClient>{
             clientId: clientId as any
         });
         if (result) {
-            return [result, true];
+            return result;
         } else {
             return false;
         }
@@ -23,7 +23,7 @@ export class DbClientRepository extends Repository<DbClient>{
     async listAll() {
         const result = await this.find({});
         if (result) {
-            return [result, true];
+            return result;
         } else {
             return false;
         }
