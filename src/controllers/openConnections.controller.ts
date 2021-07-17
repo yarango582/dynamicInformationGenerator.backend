@@ -16,10 +16,17 @@ export default class OpenConnectionsController {
         try {
             const connectionPoolManager: ConnectionPoolManager = new ConnectionPoolManager();
             const result = await this.dbClientRepository.listAll();
+            const errors: any [] = [];
             if (result!) {
                 for await (const i of result) {
-                    await connectionPoolManager.openConnections(i.nombre, i.tipoDb, i.host, i.puerto, i.usuario_remoto, i.contrasena, i.nombre);
+                   errors.push(await connectionPoolManager.openConnections(i.nombre, i.tipoDb, i.host, i.puerto, i.usuario_remoto, i.contrasena, i.nombre)); 
                 }
+            }
+            if(errors[0]!= null){
+                return {
+                    message: errors as any,
+                    statusCode: StatusCode.BAD_REQUEST
+                } as Responses;
             }
             return {
                 message: customMessages.successfulRequest,

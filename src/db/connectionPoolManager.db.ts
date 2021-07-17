@@ -1,5 +1,4 @@
 import { createConnections } from "typeorm";
-import { PoolConnection } from '../interfaces/poolConnection.interface';
 import customMessages from '../locales/apiSystem.locales.json';
 
 
@@ -12,7 +11,7 @@ export class ConnectionPoolManager {
             ]);
             connections.forEach((connection) => console.log(`${customMessages.poolConnectionsOpen}:${connection.name}`));
         } catch (error) {
-            console.log(`${customMessages.poolConnectionsError}:${error}`);
+            return error;
         }
     }
 }
