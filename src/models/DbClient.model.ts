@@ -16,12 +16,15 @@ export class DbClient {
     @Column({ nullable: false })
     host: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: false })
     contrasena: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: false })
     usuario_remoto: string;
 
-    @ManyToOne(() => Client, client => client.fk_dbClient)
+    @Column({ nullable: false })
+    puerto: number;
+
+    @ManyToOne(() => Client, client => client.id)
     clientId: Client;
 }

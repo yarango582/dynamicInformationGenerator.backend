@@ -1,4 +1,6 @@
 {
     "routerManagerUploaded": "[RouterManager] => Las rutas fueron cargadas",
-    "serverUp": "[Server] => Servidor iniciado en el puerto:"
+    "serverUp": "[Server] => Servidor iniciado en el puerto:",
+    "poolConnectionsError": "[ConnectionPoolManager] => Hubo un error al conectar el pool de conexiones db",
+    "poolConnectionsOpen": "[ConnectionPoolManager] => Abriendo conexiones remotas de clientes"
 }

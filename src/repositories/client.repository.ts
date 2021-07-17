@@ -5,7 +5,6 @@ import { UserRole } from '../enums/UserRoles.enums';
 export class ClientRepository extends Repository<Client>{
 
     async add(nombre: string, documento: string, correo: string, telefono: string, rol: UserRole) {
-
         const result = await this.find({ where: { documento } });
         if (result.length > 0) {
             return false;
