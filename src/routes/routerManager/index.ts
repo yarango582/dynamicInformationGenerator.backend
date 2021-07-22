@@ -3,6 +3,7 @@ import test from '../testConnection.route';
 import typesDb from '../typesDb.route';
 import dbClient from '../dbClient.route';
 import openConnectionsDb from '../openConnectionsDb.route';
+import checkConnectionTables from '../checkConnectionTables.route';
 
 const routes: any[] = [];
 
@@ -18,7 +19,8 @@ uploadRoutes(
     test, 
     typesDb,
     dbClient,
-    openConnectionsDb
+    openConnectionsDb,
+    checkConnectionTables
     );
 
 export default routes;

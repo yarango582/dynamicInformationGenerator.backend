@@ -27,8 +27,5 @@ export class Client {
         nullable: false
     })
     rol: UserRole;
-
-    @OneToMany(() => DbClient, dbClient => dbClient.clientId)
-    fk_dbClient: DbClient;
 }
  

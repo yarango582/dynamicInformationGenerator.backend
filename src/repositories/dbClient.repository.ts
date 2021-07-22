@@ -11,7 +11,7 @@ export class DbClientRepository extends Repository<DbClient>{
             host,
             contrasena,
             usuario_remoto,
-            clientId: clientId as any,
+            client: clientId as any,
             puerto
         });
         if (result) {
@@ -33,7 +33,7 @@ export class DbClientRepository extends Repository<DbClient>{
     async listOne(clientId: number) {
         return await this.findOne({
             where: {
-                clientId: clientId
+                client: clientId
             }
         });
     

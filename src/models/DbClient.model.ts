@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
 import { Client } from './Client.model';
 
 @Entity()
@@ -26,5 +26,7 @@ export class DbClient {
     puerto: number;
 
     @ManyToOne(() => Client, client => client.id)
-    clientId: Client;
+    @JoinColumn()
+    client: Client;
+
 }

@@ -16,6 +16,7 @@ export default class OpenConnectionsController {
         try {
             const connectionPoolManager: ConnectionPoolManager = new ConnectionPoolManager();
             const result = await this.dbClientRepository.listAll();
+            
             const errors: any [] = [];
             if (result!) {
                 for await (const i of result) {
