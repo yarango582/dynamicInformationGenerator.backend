@@ -1,5 +1,5 @@
 import express from 'express';
-import DbClientController from '../controllers/dbClient.controller';
+import { DbClientController } from '../controllers/dbClient.controller';
 
 const router: express.Router = express.Router();
 
@@ -20,10 +20,10 @@ router.get('/api/v1/dbClient', async (req, res) => {
     });
 });
 
-router.get('/api/v1/dbClient/:clientId', async (req, res) => {
+router.get('/api/v1/dbClient/:clientId/:database', async (req, res) => {
     const dbClientController: DbClientController = new DbClientController();
-    const { clientId } = req.params;
-    const result = await dbClientController.listByIdClient(Number(clientId));
+    const { clientId, database } = req.params;
+    const result = await dbClientController.listByIdClient(Number(clientId), database);
     res.status(result.statusCode).json({
         result
     });

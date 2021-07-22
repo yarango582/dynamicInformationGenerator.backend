@@ -4,7 +4,7 @@ import { DbClientRepository } from '../repositories/dbClient.repository';
 import Responses from '../interfaces/responses.interface';
 import customMessages from '../locales/responseMessages.locales.json';
 import { StatusCode } from '../enums/StatusCode.enums';
-export default class DbClientController {
+export class DbClientController {
 
     private readonly dbClientRepository: DbClientRepository;
 
@@ -57,9 +57,9 @@ export default class DbClientController {
         }
     }
 
-    async listByIdClient(idClient: number) {
+    async listByIdClient(idClient: number, databaseName: string) {
         try {
-            const result = await this.dbClientRepository.listOne(idClient);
+            const result = await this.dbClientRepository.listOne(idClient, databaseName);
             if (result) {
                 return {
                     message: customMessages.successfulRequest,
@@ -71,7 +71,7 @@ export default class DbClientController {
                     message: customMessages.notFound,
                     statusCode: StatusCode.NOT_FOUND
                 } as Responses;
-            }   
+            }
         } catch (error) {
             return {
                 message: error.message,
@@ -79,4 +79,5 @@ export default class DbClientController {
             } as Responses;
         }
     }
+
 }

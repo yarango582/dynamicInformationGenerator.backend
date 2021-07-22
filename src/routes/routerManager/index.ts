@@ -4,6 +4,7 @@ import typesDb from '../typesDb.route';
 import dbClient from '../dbClient.route';
 import openConnectionsDb from '../openConnectionsDb.route';
 import checkConnectionTables from '../checkConnectionTables.route';
+import exportTables from '../exportTables.route';
 
 const routes: any[] = [];
 
@@ -15,12 +16,13 @@ function uploadRoutes(...dependencies) {
 
 // importa las rutas y cargalas aqui
 uploadRoutes(
-    client, 
-    test, 
+    client,
+    test,
     typesDb,
     dbClient,
     openConnectionsDb,
-    checkConnectionTables
-    );
+    checkConnectionTables,
+    exportTables
+);
 
 export default routes;

@@ -30,12 +30,14 @@ export class DbClientRepository extends Repository<DbClient>{
         }
     }
 
-    async listOne(clientId: number) {
+    async listOne(clientId: number, databaseName: string) {
         return await this.findOne({
             where: {
-                client: clientId
+                client: clientId,
+                nombre: databaseName,
             }
         });
-    
+
     }
+
 }

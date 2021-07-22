@@ -1,29 +1,34 @@
-import { getConnection } from 'typeorm';
-
+import { getConnection, Connection, Table } from 'typeorm';
+import { GetTablesDbClient } from './getTablesDbClient.controller';
 export class ExportTableController {
 
-    private connectionName: string;
-    async getConnectionDb(connectionName: string) {
+    private getTablesDbClient: GetTablesDbClient = new GetTablesDbClient();
+
+    async exportTables(connectionName: string, tables: string) {
+        const tablesResult = await this.getTables(connectionName, tables);
+        return tablesResult;
+    }
+
+    async getTables(connectionName: string, tables: string) {
+        const arrayTables: string[] = tables.split(',');
         try {
-            this.connectionName = connectionName;
-            return getConnection(this.connectionName);
+            const connection = getConnection(connectionName);
+            const tables = await connection.createQueryRunner()
+                .getTables(arrayTables);
+            this.executeQuery(tables[0], connection);
+            return true;
         } catch (error) {
             return error.message;
         }
     }
 
-    async getConnectionTables(tablesNames: string[]) {
+    async executeQuery(table: Table, connection: Connection) {
         try {
-            const connection = await this.getConnectionDb(this.connectionName);
-            const tables = await connection.createQueryRunner()
-                .getTables(tablesNames);
-            if (tablesNames.length === tables.length) {
-                return [true, tables.length];
-            } else {
-                return [false, tables.length];
-            }
+            const result = await connection.query(`SELECT * FROM ${table.name}`);
+            console.log('resultado del query: ' + result);
         } catch (error) {
-            return error.message;
+            console.log(error.message);
         }
     }
+
 }

@@ -19,4 +19,12 @@ export class ConfigTablesClientRepository extends Repository<ConfigTablesClient>
         });
     }
 
+    async listById(dbClientId: number){
+        return this.findOne({
+            where: {
+                dbClient: dbClientId
+            }
+        })
+    }
+
 }

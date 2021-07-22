@@ -6,6 +6,12 @@ import { ConfigTablesClientRepository } from '../repositories/configTablesClient
 
 export class SaveAutomaticConfigTablesController {
 
+    private configTablesClientRepository: ConfigTablesClientRepository;
+
+    constructor() {
+        this.configTablesClientRepository = getCustomRepository(ConfigTablesClientRepository);
+    }
+
     static async init(tables: string, dbClientId: number) {
         const configTablesClientRepository: ConfigTablesClientRepository = getCustomRepository(ConfigTablesClientRepository);
         try {
@@ -19,14 +25,39 @@ export class SaveAutomaticConfigTablesController {
                 return {
                     message: customMessages.retryAgain,
                     statusCode: StatusCode.BAD_REQUEST
-                } as Responses; 
+                } as Responses;
             }
         } catch (error) {
             return {
                 message: customMessages.retryAgain,
                 statusCode: StatusCode.BAD_REQUEST,
                 data: error
-            } as Responses; 
+            } as Responses;
         }
+    }
+
+    async getConfig(dbClientId: number) {
+        try {
+            const result = await this.configTablesClientRepository.listById(dbClientId);
+            if (result) {
+                return {
+                    message: customMessages.successfulRequest,
+                    statusCode: StatusCode.OK,
+                    data: result
+                } as Responses;
+            } else {
+                return {
+                    message: customMessages.retryAgain,
+                    statusCode: StatusCode.BAD_REQUEST
+                } as Responses;
+            }
+        } catch (error) {
+            return {
+                message: customMessages.retryAgain,
+                statusCode: StatusCode.BAD_REQUEST,
+                data: error.message
+            } as Responses;
+        }
+
     }
 }

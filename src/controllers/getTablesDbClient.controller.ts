@@ -12,12 +12,13 @@ export class GetTablesDbClient {
         }
     }
 
-    async getConnectionTables(tablesNames: string[]) {
+    async getConnectionTables(tablesNames: string) {
+        const arrayTables: string [] = tablesNames.split(',');
         try {
             const connection = await this.getConnectionDb(this.connectionName);
             const tables = await connection.createQueryRunner()
-                .getTables(tablesNames);
-            if (tablesNames.length === tables.length) {
+                .getTables(arrayTables);
+            if (arrayTables.length === tables.length) {
                 return [true, tables.length];
             } else {
                 return [false, tables.length];
@@ -26,4 +27,5 @@ export class GetTablesDbClient {
             return error.message;
         }
     }
+
 }

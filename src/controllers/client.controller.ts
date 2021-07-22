@@ -4,6 +4,8 @@ import { ClientRepository } from "../repositories/client.repository";
 import { StatusCode } from "../enums/StatusCode.enums";
 import customMessages from '../locales/responseMessages.locales.json';
 import Responses from "../interfaces/responses.interface";
+import { ExportDataUtil } from '../utils/exportData.util';
+import path from 'path';
 export default class ClientController {
 
     private readonly clientRepository: ClientRepository;
@@ -16,6 +18,7 @@ export default class ClientController {
         try {
             const result = await this.clientRepository.add(nombre, documento, correo, telefono, rol);
             if (result) {
+                await ExportDataUtil.createDirectory(`${path.dirname(__dirname)}/tmp/${documento}-${correo}`);
                 return {
                     message: result as any,
                     statusCode: StatusCode.CREATED
