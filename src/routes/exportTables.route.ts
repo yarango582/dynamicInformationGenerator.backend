@@ -4,6 +4,8 @@ import { DbClientController } from '../controllers/dbClient.controller';
 import { SaveAutomaticConfigTablesController } from '../controllers/saveAutomatiConfigTables.controller';
 import { StatusCode } from '../enums/StatusCode.enums';
 import customMessages from '../locales/responseMessages.locales.json';
+import { ExportDataUtil } from '../utils/exportData.util';
+import path from 'path';
 
 const router: express.Router = express.Router();
 
@@ -21,7 +23,7 @@ router.get('/api/v1/exporttables/:idClient/:database', async (req, res) => {
             if (response.statusCode === 200) {
                 const result = await exportTableController.exportTables(consultDbClient.data.nombre, response.data.tables);
                 res.status(200).json({
-                    result
+                    exportandoInfo: true
                 });
             } else {
                 res.status(response.statusCode).json({
