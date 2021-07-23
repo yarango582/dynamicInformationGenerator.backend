@@ -18,6 +18,14 @@ export class ClientRepository extends Repository<Client>{
         return await this.find();
     }
 
+    async listById(id: number) {
+        return await this.findOne({
+            where: {
+                id
+            }
+        })
+    }
+
     async listOne(documento: string) {
         return await this.findOne({
             where: {

@@ -6,7 +6,7 @@ import customMessages from '../locales/responseMessages.locales.json';
 import Responses from "../interfaces/responses.interface";
 import { ExportDataUtil } from '../utils/exportData.util';
 import path from 'path';
-export default class ClientController {
+export class ClientController {
 
     private readonly clientRepository: ClientRepository;
 
@@ -18,7 +18,7 @@ export default class ClientController {
         try {
             const result = await this.clientRepository.add(nombre, documento, correo, telefono, rol);
             if (result) {
-                await ExportDataUtil.createDirectory(`${path.dirname(__dirname)}/tmp/${documento}-${correo}`);
+                await ExportDataUtil.createDirectory(`${path.dirname(__dirname)}/tmp/${documento}`);
                 return {
                     message: result as any,
                     statusCode: StatusCode.CREATED
@@ -63,6 +63,34 @@ export default class ClientController {
     async listByDocument(document: string) {
         try {
             const result = await this.clientRepository.listOne(document);
+            if (result) {
+                return {
+                    message: customMessages.successfulRequest,
+                    statusCode: StatusCode.OK,
+                    data: result
+                } as Responses;
+            } else if (result === undefined) {
+                return {
+                    message: customMessages.notFound,
+                    statusCode: StatusCode.NOT_FOUND,
+                } as Responses;
+            } else {
+                return {
+                    message: customMessages.incompleteInformation,
+                    statusCode: StatusCode.BAD_REQUEST,
+                } as Responses;
+            }
+        } catch (error) {
+            return {
+                message: error.message,
+                statusCode: StatusCode.INTERNAL_SERVER_ERROR
+            } as Responses;
+        }
+    }
+
+    async listById(id: number) {
+        try {
+            const result = await this.clientRepository.listById(id);
             if (result) {
                 return {
                     message: customMessages.successfulRequest,

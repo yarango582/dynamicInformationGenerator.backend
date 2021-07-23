@@ -1,25 +1,27 @@
 import { getConnection, Connection, Table, TableExclusion } from 'typeorm';
 import { GetTablesDbClient } from './getTablesDbClient.controller';
 import { ExportDataUtil } from '../utils/exportData.util';
+import { Separator } from '../enums/Separator.enums';
 import path from 'path';
+import { MomentUtil } from '../utils/moment.util';
+import { CreateZip } from '../utils/createZip.util';
 export class ExportTableController {
 
     private getTablesDbClient: GetTablesDbClient = new GetTablesDbClient();
 
-    async exportTables(connectionName: string, tables: string) {
-        const tablesResult = await this.getTables(connectionName, tables);
+    async exportTables(connectionName: string, tables: string, user: any) {
+        const tablesResult = await this.getTables(connectionName, tables, user);
         return tablesResult;
     }
 
-    async getTables(connectionName: string, tables: string) {
+    async getTables(connectionName: string, tables: string, user: any) {
         const arrayTables: string[] = tables.split(',');
         try {
             const connection = getConnection(connectionName);
             const tables = await connection.createQueryRunner()
                 .getTables(arrayTables);
-
             for await (const iterator of tables) {
-                await this.executeQuery(iterator, connection);
+                await this.executeQuery(iterator, connection, user);
             }
             return true;
         } catch (error) {
@@ -27,20 +29,23 @@ export class ExportTableController {
         }
     }
 
-    async executeQuery(table: Table, connection: Connection) {
+    // aqui sale el exportable de los planos al servidor
+    async executeQuery(table: Table, connection: Connection, user: any) {
         try {
             const columns = await this.getColumns(table);
             const rawData = await connection.query(`
             SELECT ${columns} 
             FROM ${table.name}
             `);
-
             const data = await this.formatDataPush(rawData, columns);
-            await ExportDataUtil.createTxt(';' + data.join(';')
-                , `${path.dirname(__dirname)}/tmp/1088327285-yeisonarango03@gmail.com/${table.name}.txt`);
+            const date = MomentUtil.getDate('YYYY[6]MMDD');
+            const dir = `${path.dirname(__dirname)}/tmp/${user.data.documento}/${user.data.documento}-${date}`;
+            await ExportDataUtil.createTxt(Separator.puntoYcoma + data.join(Separator.puntoYcoma)
+                , `${dir}/${table.name}.txt`);
+            await CreateZip.createDocument(`${user.data.documento}-${date}.zip`, `${dir}`);
             return rawData;
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     }
 
